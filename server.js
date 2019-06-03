@@ -193,7 +193,7 @@ app.delete("/articles/deleteAll", function(req, res) {
 });
 
 // Delete a note
-app.delete("/notes/deleteNote/:note_id/:article_id", function(req, res) {
+app.delete("/notes/deleteNote/:note_id", function(req, res) {
   // Use the note id to find and delete it
   db.Note.findOneAndRemove({ _id: req.params.note_id }, function(err) {
     // if any errors occur...
@@ -241,6 +241,19 @@ app.get("/saved", function(req, res) {
     });
 });
 
+// Route to delete a saved article
+app.post("/deleteSaved/:id", function(req, res) {
+    // grab the article by its id 
+   db.Article.findOneAndUpdate({_id: req.params.id}, {$set: {saved: false}})
+        // return the notes left
+        .then(function(dbArticle) {
+            res.json(dbArticle);
+        })
+        .catch(function(err) {
+            // If an error occurs, send it back to the client
+            res.json(err);
+        });
+});
 
 // Start the server
 app.listen(PORT, function() {

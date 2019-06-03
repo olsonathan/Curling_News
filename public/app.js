@@ -39,7 +39,7 @@ $(document).on("click", "p", function() {
      
       // If there's a note in the article
       if (data.note) {
-       
+        
         // An input to enter a new title
       $("#notes").append("<h3>" + "Saved Notes" + "</h3>");
     
@@ -47,12 +47,14 @@ $(document).on("click", "p", function() {
       // A textarea to add a new note body
       $("#notes").append("<textarea id='Sbodyinput' name='body'></textarea>");
       // A button to submit a new note, with the id of the article saved to it
-      $("#notes").append("<button data-id='" + data._id + "' id='deletenote'>Delete Note</button>");
+      $("#notes").append(
+      "<button data-id='" + data.note._id + "' articleId='" + thisId + "' id='deletenote'>Delete Note</button>");
 
         // Place the title of the note in the title input
         $("#Stitleinput").val(data.note.title);
         // Place the body of the note in the body textarea
         $("#Sbodyinput").val(data.note.body);
+        
       }
       
     });
@@ -96,7 +98,7 @@ $(document).on("click", "#deletenote", function() {
   // Run a POST request to change the note, using what's entered in the inputs
   $.ajax({
     method: "DELETE",
-    url: "/notes/deleteNote/" + thisId + "/" + articleId,
+    url: "/notes/deleteNote/" + thisId, // + "/" + articleId,
   })
   .done(function(data) { // hide the modal
     $("#notes").empty();
@@ -152,6 +154,7 @@ $(document).on("click", ".save-article", function() {
     // With that done...
     .done(function(data) { // refresh the page
     console.log("article saved: " + data);
+    alert("Your Article has been saved")
      // location.reload();
     });
 
@@ -169,9 +172,41 @@ $("#view-saved").on("click", function() {
       // Display the information on the page
        $("#savedArticles").append("<div class='panel panel-primary'> <div class='panel-heading'><h3 data-id='" + data[i]._id + "'>" + data[i].title + "<br />" +  "</h3></div>" + "<div class='panel-body'><p>" + data[i].summary + "</p>" + "<br>" +
       "<h5>" + "<a href='" + data[i].link + "'>" + "Article link" + '</a>' + "</h5>" +
-        "<button class='view-notes' type='button' data-target='#noteModal' data-toggle='modal' data-id='" + data[i]._id + "'>" + "View Notes" + "</button>" +
+       "<button class='home' type='button' data-target='#noteModal' data-toggle='modal' data-id='" + data[i]._id + "'>" + "Home" + "</button>" +
         "<button class='delete-article' type='submit' data-id='" + data[i]._id + "'>" + "Delete Article" + "</button></div></div>"  + "<br>" + "<br>" + "<br>"
       );
     }
   });
  });
+
+ $(document).on("click", ".delete-article", function() {
+  // Grab the id associated with the article from the delete button
+  var thisId = $(this).attr("data-id");
+
+  // Run POST method
+  $.ajax({
+      method: "POST",
+      url: "/deleteSaved/" + thisId,
+    })
+    // With that done...
+    .done(function(data) { // refresh the page
+ location.reload();
+    });
+
+});
+
+$(document).on("click", ".home", function() {
+  // Grab the id associated with the article from the delete button
+  var thisId = $(this).attr("data-id");
+
+  // Run POST method
+  $.ajax({
+      method: "GET",
+      url: "/",
+    })
+    // With that done...
+    .done(function(data) { // refresh the page
+ location.reload();
+    });
+
+});
