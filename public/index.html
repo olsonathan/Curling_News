@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Scraping the Curling News</title>
+    <style>
+      body { height: 100%;
+      background-image: url("https://njcurling.org/wp-content/uploads/2018/02/curlingrocks1.jpg");
+      background-position: center;
+      background-repeat: repeat;
+      background-size: cover; }
+
+      #wrapper {
+        width: 960px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 5%;
+      }
+      #articles {
+        display: inline-block;
+        overflow: auto;
+        width: 60%;
+        height: 700px;
+        background-color: white;
+      }
+      #notes {
+        float: right;
+        width: 30%;
+      }
+      textarea, input {
+        display: block;
+        width: 100%;
+        background-color: white;
+      }
+      input {
+        height: 36px;
+        font-size: 24px;
+      }
+      textarea {
+        height: 200px;
+        font-size: 18px;
+      }
+
+      #snotes {
+        float: right;
+        width: 30%;
+      }
+      textarea, input {
+        display: block;
+        width: 100%;
+        background-color: white;
+      }
+      input {
+        height: 36px;
+        font-size: 24px;
+      }
+      textarea {
+        height: 200px;
+        font-size: 18px;
+      }
+      #savedArticles {
+        display: inline-block;
+        overflow: auto;
+        width: 90%;
+        height: auto;
+        background-color: white;
+      }
+    </style>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/materia/bootstrap.min.css">
+  </head>
+  <body>
+    <div id="wrapper">
+      <div>
+      <h1>Curling News Scraper</h1>
+      <a class="btn btn-danger scrape-new">SCRAPE NEW ARTICLES!</a>
+      <a class="btn btn-danger clear">CLEAR ARTICLES!</a>
+      <a class="btn btn-primary" id="view-saved">SAVED ARTICLES</a>
+    </div>
+    <br>
+      <div id="articles"></div>
+      <div id="notes"></div>
+      <div id="savedArticles"></div>
+           
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
